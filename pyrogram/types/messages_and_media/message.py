@@ -501,7 +501,7 @@ class Message(Object, Update):
 
             user = utils.get_raw_peer_id(message.from_id) or utils.get_raw_peer_id(message.peer_id)
             from_user = types.User._parse(client, users.get(user, None))
-            sender_chat = types.Chat._parse(client, message, users, chats) if not from_user else None
+            sender_chat = types.Chat._parse(client, message, users, chats, True) if not from_user else None
 
             parsed_message = Message(
                 message_id=message.id,
@@ -698,7 +698,7 @@ class Message(Object, Update):
 
             user = utils.get_raw_peer_id(message.from_id) or utils.get_raw_peer_id(message.peer_id)
             from_user = types.User._parse(client, users.get(user, None))
-            sender_chat = types.Chat._parse(client, message, users, chats) if not from_user else None
+            sender_chat = types.Chat._parse(client, message, users, chats, True) if not from_user else None
 
             parsed_message = Message(
                 message_id=message.id,

@@ -238,13 +238,16 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse(client, message: Union[raw.types.Message, raw.types.MessageService], users: dict, chats: dict) -> "Chat":
+    def _parse(client, message: Union[raw.types.Message, raw.types.MessageService], users: dict, chats: dict, sender_chat: bool = False) -> "Chat":
         if isinstance(message.peer_id, raw.types.PeerUser):
             return Chat._parse_user_chat(client, users[message.peer_id.user_id])
 
         if isinstance(message.peer_id, raw.types.PeerChat):
             return Chat._parse_chat_chat(client, chats[message.peer_id.chat_id])
-
+        
+        if sender_chat and isinstance(message.from_id, raw.types.PeerChannel):
+            return Chat._parse_channel_chat(client, chats[message.from_id.channel_id])
+        
         return Chat._parse_channel_chat(client, chats[message.peer_id.channel_id])
 
     @staticmethod
