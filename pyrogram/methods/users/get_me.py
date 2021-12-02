@@ -36,9 +36,9 @@ class GetMe(Scaffold):
         """
         return types.User._parse(
             self,
-            (await self.send(
+            ((await self.send(
                 raw.functions.users.GetFullUser(
                     id=raw.types.InputUserSelf()
                 )
-            )).user
+            )).users)[0]
         )
